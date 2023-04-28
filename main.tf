@@ -61,7 +61,7 @@ resource "azurerm_public_ip" "my_vm_public_ip" {
   allocation_method   = "Dynamic"
 }
 
-
+//NSG for Virtual machine
 resource "azurerm_network_security_group" "my_terraform_nsg" {
   name                = "myNetworkSecurityGroup"
   location            = azurerm_virtual_network.application.location
@@ -93,6 +93,12 @@ resource "azurerm_network_interface" "myvm_network" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.my_vm_public_ip.id
   }
+}
+
+//NSG association
+resource "azurerm_network_interface_security_group_association" "example" {
+  network_interface_id      = azurerm_network_interface.myvm_network.id
+  network_security_group_id = azurerm_network_security_group.my_terraform_nsg.id
 }
 
 //Virtual Machine
