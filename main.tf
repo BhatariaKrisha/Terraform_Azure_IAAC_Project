@@ -2,6 +2,10 @@ provider "azurerm" {
     features {}
 }
 
+//This data source is used to access configuration of Azurerm Provider
+# data "azurerm_client_config" "current" {}
+
+
 //App virtual network
 resource "azurerm_virtual_network" "application" {
     name = var.app_vnet
@@ -211,6 +215,7 @@ resource "azurerm_subnet" "fw_subnet" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
+//Firewall public ip
 resource "azurerm_public_ip" "fw_pip" {
   name                = var.afw_pip
   location            = var.azure_region
@@ -219,6 +224,7 @@ resource "azurerm_public_ip" "fw_pip" {
   sku                 = "Standard"
 }
 
+//Azure Firewall
 resource "azurerm_firewall" "afw_example" {
   name                = "myfirewall"
   location            = var.azure_region
@@ -232,3 +238,4 @@ resource "azurerm_firewall" "afw_example" {
     public_ip_address_id = azurerm_public_ip.fw_pip.id
   }
 }
+
