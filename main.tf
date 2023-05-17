@@ -1,9 +1,10 @@
 provider "azurerm" {
-    features {}
+    features {
+    }
 }
 
 //This data source is used to access configuration of Azurerm Provider
-# data "azurerm_client_config" "current" {}
+data "azurerm_client_config" "current" {}
 
 
 //App virtual network
@@ -82,6 +83,18 @@ resource "azurerm_network_security_group" "my_terraform_nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  security_rule {
+    name                       = "AllowPort80"
+    priority                   = 1000
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 
@@ -94,7 +107,8 @@ resource "azurerm_network_interface" "myvm_network" {
   ip_configuration {
     name                          = "example-ipconfig"
     subnet_id                     = azurerm_subnet.subnet1.id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "Static"
+    private_ip_address            = "${cidrhost("10.0.1.0/24", 4)}"
     public_ip_address_id          = azurerm_public_ip.my_vm_public_ip.id
   }
 }
@@ -116,8 +130,8 @@ resource "azurerm_linux_virtual_machine" "example_linux_vm" {
     azurerm_network_interface.myvm_network.id,
   ]
 
-  admin_username = "adminuser"
-  admin_password = "Krisha123"
+  admin_username = var.vm_username
+  admin_password = var.vm_password
   disable_password_authentication = false
 
   os_disk {
@@ -239,3 +253,31 @@ resource "azurerm_firewall" "afw_example" {
   }
 }
 
+resource "azurerm_key_vault" "test_kv" {
+  name                        = var.key_vault_name
+  location                    = var.azure_region
+  resource_group_name         = var.rg_name
+  enabled_for_disk_encryption = true
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  soft_delete_retention_days  = 7
+  purge_protection_enabled    = false
+
+  sku_name = "standard"
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "Get",
+    ]
+
+    secret_permissions = [
+      "Get",
+    ]
+
+    storage_permissions = [
+      "Get",
+    ]
+  }
+}
