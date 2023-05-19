@@ -7,5 +7,5 @@
 
 # Commands to run Script
 1. terraform init
-2. terraform plan -var-file="variables.tfvars" -var-file="secrets.tfvars"
-3. terraform apply -var-file="variables.tfvars" -var-file="secrets.tfvars" -auto-approve
+2. terraform plan
+3. terraform apply -auto-approve
