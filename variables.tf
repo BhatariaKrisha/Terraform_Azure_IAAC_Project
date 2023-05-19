@@ -8,6 +8,11 @@ variable "rg_name" {
     description = "Resource group for Infrastructure"
 }
 
+variable "dns_zone" {
+    type = string
+    description = "Dns Zone provided"
+}
+
 variable "app_vnet" {
   type        = string
   default     = "app-vnet"

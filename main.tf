@@ -32,12 +32,12 @@ resource "azurerm_subnet" "subnet2" {
 }
 
 //DNS Zone
-resource "azurerm_dns_zone" "example-public" {
-  name                = "mydomain.com"
-  resource_group_name = var.rg_name
-}
+# resource "azurerm_dns_zone" "example-public" {
+#   name                = "mydomain.com"
+#   resource_group_name = var.rg_name
+# }
 
-//Public IP address
+//application gateway Public IP address
 resource "azurerm_public_ip" "example" {
   name                = "mypublicip"
   location            = var.azure_region
@@ -51,8 +51,8 @@ resource "azurerm_public_ip" "example" {
 
 //DNS a record
 resource "azurerm_dns_a_record" "example" { 
-  name                = "record1"
-  zone_name           = azurerm_dns_zone.example-public.name
+  name                = "@"
+  zone_name           = var.dns_zone
   resource_group_name = var.rg_name
   ttl                 = 1
   target_resource_id  = azurerm_public_ip.example.id
