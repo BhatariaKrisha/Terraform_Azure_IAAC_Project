@@ -11,11 +11,13 @@ variable "rg_name" {
 variable "app_vnet" {
   type        = string
   default     = "app-vnet"
+  description = "virtual network name for VM and Gateway"
 }
 
 variable "hub_vnet" {
   type        = string
   default     = "hub-vnet"
+  description = "virtual network name for firewall and key vault"
 }
 
 variable "vm_username" {
@@ -32,7 +34,7 @@ variable "vm_password" {
 
 variable "afw_subnet" {
   type        = string
-  default     = "AzureFirewallSubnet"
+  description = "subnet name for azure firewall"
 }
 
 variable "afw_pip" {
