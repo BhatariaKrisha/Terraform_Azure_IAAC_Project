@@ -1,12 +1,10 @@
 variable "azure_region" {
   type        = string
-  default = "West Europe"
   description = "Region for Azure"
 }
 
 variable "rg_name" {
     type        = string
-    default = "rg-krisha-playground"
     description = "Resource group for Infrastructure"
 }
 
