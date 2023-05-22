@@ -1,8 +1,11 @@
-# Variables with .tfvar File
-1. You can have all your variable values in a file and submit that file with -var-file argument.
-2. Inside the file will be each variable name label as key and value for that
-3. If there is a file in the same directory as the configuration named terraform.tfvars or  terraform.tfvars.json terraform will use the values it finds in that file.
+# Variables with Environment Variables
+1.  Terraform searches the environment of its own process for environment variables named TF_VAR_ followed by the name of a declared variable.
 
+# To set the environment variable in windows use following command:
+    Set-Item -Path env:TF_VAR_vm_publisher -Value “Canonical”
+    Set-Item -Path env:TF_VAR_vm_offer -Value “UbuntuServer”
+    Set-Item -Path env:TF_VAR_vm_sku -Value “18.04-LTS”
+    
 # Commands to run script
 1. terraform init
 2. terraform plan -var-file="variables.tfvars" -var-file="secrets.tfvars"
