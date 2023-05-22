@@ -48,3 +48,13 @@ variable "key_vault_name" {
   type = string
   description = "Key vault name not used before"
 }
+
+variable "vm_publisher" {
+  default = ""
+}
+variable "vm_offer" {
+  default = ""
+}
+variable "vm_sku" {
+  default = ""
+}
