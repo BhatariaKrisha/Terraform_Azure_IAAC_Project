@@ -15,11 +15,13 @@ variable "dns_zone" {
 
 variable "app_vnet" {
   type        = string
+  default     = "app_vnet"
   description = "virtual network name for VM and Gateway"
 }
 
 variable "hub_vnet" {
   type        = string
+  default     = "hub_vnet"
   description = "virtual network name for firewall and key vault"
 }
 
@@ -42,6 +44,7 @@ variable "afw_subnet" {
 
 variable "afw_pip" {
   type        = string
+  default     = "afwpip"
 }
 
 variable "key_vault_name" {
