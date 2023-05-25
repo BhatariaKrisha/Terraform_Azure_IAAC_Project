@@ -3,6 +3,10 @@ provider "azurerm" {
     }
 }
 
+data "azurerm_dns_zone" "dns_name" {
+  name = "krishab.azure.integrella.net"
+  resource_group_name = var.rg_name
+}
 //This data source is used to access configuration of Azurerm Provider
 data "azurerm_client_config" "current" {}
 
